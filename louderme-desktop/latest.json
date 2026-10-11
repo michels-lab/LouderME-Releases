@@ -4,9 +4,9 @@
   "platform": "windows-x64",
   "channel": "stable",
   "versionName": "0.1.11",
-  "installerUrl": "https://github.com/michels-lab/LouderME-Releases/releases/download/louderme-android-v0.1.10-desktop-v0.1.11/LouderMe-Setup-v0.1.11.exe",
+  "installerUrl": "https://github.com/michels-lab/LouderME-Releases/releases/download/louderme-android-v0.1.11-desktop-v0.1.11/LouderMe-Setup-v0.1.11.exe",
   "installerSha256": "59d63eb8f775d1b2f2b81abbe1f079762f56f065e0b9813e99b9a127eb946b18",
-  "portableUrl": "https://github.com/michels-lab/LouderME-Releases/releases/download/louderme-android-v0.1.10-desktop-v0.1.11/LouderMe-Portable-v0.1.11.exe",
+  "portableUrl": "https://github.com/michels-lab/LouderME-Releases/releases/download/louderme-android-v0.1.11-desktop-v0.1.11/LouderMe-Portable-v0.1.11.exe",
   "portableSha256": "a4da3e98d79f8960ae7a69ef70ff1a24a1945acb011606350a4f0e4c99dc1a4a",
-  "releaseUrl": "https://github.com/michels-lab/LouderME-Releases/releases/tag/louderme-android-v0.1.10-desktop-v0.1.11"
+  "releaseUrl": "https://github.com/michels-lab/LouderME-Releases/releases/tag/louderme-android-v0.1.11-desktop-v0.1.11"
 }
