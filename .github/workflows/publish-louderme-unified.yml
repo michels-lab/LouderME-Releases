@@ -16,6 +16,7 @@ concurrency:
 
 jobs:
   publish:
+    if: github.repository == 'michels-lab/LouderME-Releases'
     name: Verify and publish Android and Windows
     runs-on: ubuntu-latest
     steps:
