@@ -111,6 +111,7 @@ jobs:
           git add louderme/latest.json louderme-desktop/latest.json
           if ! git diff --cached --quiet; then
             git commit -m "release: seed independent LouderMe Android and Windows update feeds"
+            git pull --rebase origin main
             git push origin HEAD:main
           fi
 
