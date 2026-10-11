@@ -1,6 +1,6 @@
 version: 1
 studio: "Michel's Lab"
-project: "Michel's Life Releases"
+project: "LouderMe Releases"
 repository: "michels-lab/LouderME-Releases"
 role: "distribution"
 
@@ -9,11 +9,12 @@ governance:
   reporting_mode: "polled_by_master"
   source_of_truth:
     shared_rules: "michels-lab/Michel-Software-Standards"
-    project_implementation: "michels-lab/michel-s-life-releases"
+    project_implementation: "michels-lab/LouderME-Releases"
 
 reporting:
   project_logs:
     - "README.md"
+    - "RELEASE_AUDIT_LOG.md"
   escalate_to_master:
     - "release_or_version_policy_change"
     - "cross_app_architecture_decision"
