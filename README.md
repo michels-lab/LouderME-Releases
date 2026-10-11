@@ -2,7 +2,7 @@
 
 This **public binary distribution** repository belongs to **Michel's Lab** and is reserved exclusively for **LouderMe**. Development source code belongs to [michels-lab/LouderMe](https://github.com/michels-lab/LouderMe); Michel's Life is a completely separate application and distribution channel.
 
-Every LouderMe stable release contains **both Android and Windows** build artifacts under one release tag, with platform-specific version numbers and SHA-256 checksums:
+Current and future LouderMe unified stable releases contain **both Android and Windows** build artifacts under one release tag, with platform-specific version numbers and SHA-256 checksums. Older imported historical tags may contain only one platform:
 - Android Direct APK: `LouderMe-vX.Y.Z-sideload.apk`
 - Windows Setup: `LouderMe-Setup-vX.Y.Z.exe`
 - Windows Portable: `LouderMe-Portable-vX.Y.Z.exe`
