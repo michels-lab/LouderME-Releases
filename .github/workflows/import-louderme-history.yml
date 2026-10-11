@@ -1,0 +1,138 @@
+name: Import LouderMe public release history
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: ['migration/START.json']
+
+permissions:
+  contents: write
+
+concurrency:
+  group: louderme-release-import
+  cancel-in-progress: false
+
+jobs:
+  import:
+    if: github.repository == 'michels-lab/LouderME-Releases'
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    env:
+      GH_TOKEN: ${{ github.token }}
+      SOURCE_REPO: michels-lab/michel-s-life-releases
+      TARGET_REPO: michels-lab/LouderME-Releases
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - name: Import LouderMe releases without deleting legacy links
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$GITHUB_REPOSITORY" = "$TARGET_REPO"
+          mkdir -p /tmp/louderme-import
+          gh api "repos/$SOURCE_REPO/releases?per_page=100" > /tmp/louderme-source-releases.json
+          jq -r '.[] | select(.tag_name | startswith("louderme-")) | [.published_at,.tag_name] | @tsv' /tmp/louderme-source-releases.json | sort | cut -f2 > /tmp/louderme-tags
+          test -s /tmp/louderme-tags
+
+          while IFS= read -r TAG; do
+            echo "::group::Import $TAG"
+            D="/tmp/louderme-import/$TAG"
+            mkdir -p "$D"
+            gh release download "$TAG" --repo "$SOURCE_REPO" --dir "$D"
+            python3 - "$TAG" <<'PY'
+          import hashlib, pathlib, re, sys
+          tag = sys.argv[1]
+          folder = pathlib.Path('/tmp/louderme-import') / tag
+          files = list(folder.iterdir())
+          if not files:
+              raise SystemExit(f'{tag}: source release has no downloadable assets')
+          for sidecar in folder.glob('*.sha256'):
+              binary = folder / sidecar.name.removesuffix('.sha256')
+              if not binary.exists():
+                  raise SystemExit(f'{tag}: missing binary for {sidecar.name}')
+              match = re.search(r'\b[0-9a-fA-F]{64}\b', sidecar.read_text())
+              if not match:
+                  raise SystemExit(f'{tag}: checksum missing from {sidecar.name}')
+              digest = hashlib.sha256(binary.read_bytes()).hexdigest()
+              if digest.lower() != match.group().lower():
+                  raise SystemExit(f'{tag}: SHA-256 mismatch for {binary.name}')
+          print(f'VERIFIED_SOURCE {tag}: {len(files)} files')
+          PY
+            if gh release view "$TAG" --repo "$TARGET_REPO" >/dev/null 2>&1; then
+              echo "Existing destination release; keeping it unchanged"
+            else
+              TITLE="$(jq -r --arg tag "$TAG" '.[] | select(.tag_name==$tag) | .name' /tmp/louderme-source-releases.json)"
+              jq -r --arg tag "$TAG" '.[] | select(.tag_name==$tag) | .body // ""' /tmp/louderme-source-releases.json > /tmp/louderme-notes.md
+              gh release create "$TAG" "$D"/* --repo "$TARGET_REPO" --target main --title "$TITLE" --notes-file /tmp/louderme-notes.md
+            fi
+            gh api "repos/$TARGET_REPO/releases/tags/$TAG" > "/tmp/louderme-import/$TAG-target.json"
+            python3 - "$TAG" <<'PY'
+          import json, sys
+          tag = sys.argv[1]
+          source = json.load(open('/tmp/louderme-source-releases.json'))
+          old = next(x for x in source if x['tag_name'] == tag)
+          new = json.load(open(f'/tmp/louderme-import/{tag}-target.json'))
+          old_assets = {a['name']: a['size'] for a in old['assets']}
+          new_assets = {a['name']: a['size'] for a in new['assets']}
+          if old_assets != new_assets:
+              raise SystemExit(f'{tag}: asset names or byte sizes differ: {old_assets} vs {new_assets}')
+          print(f'MIGRATED {tag}: {len(old_assets)} asset names/sizes match')
+          PY
+            rm -rf "$D"
+            echo "::endgroup::"
+          done < /tmp/louderme-tags
+
+      - name: Seed standalone Android and Windows update manifests
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          from urllib.request import urlopen
+          old = 'michels-lab/michel-s-life-releases'
+          new = 'michels-lab/LouderME-Releases'
+          for path in ('louderme/latest.json', 'louderme-desktop/latest.json'):
+              with urlopen(f'https://raw.githubusercontent.com/{old}/main/{path}', timeout=30) as response:
+                  data = json.load(response)
+              keys = ('apkUrl', 'releaseUrl') if path.startswith('louderme/') else ('installerUrl', 'portableUrl', 'releaseUrl')
+              for key in keys:
+                  if old not in data[key]:
+                      raise SystemExit(f'{path}: unexpected legacy URL in {key}')
+                  data[key] = data[key].replace(old, new)
+              Path(path).parent.mkdir(parents=True, exist_ok=True)
+              Path(path).write_text(json.dumps(data, indent=2) + '\n', encoding='utf-8')
+              print('SEEDED', path, data['versionName'])
+          PY
+          git config user.name "Michel's Lab Release Bot"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add louderme/latest.json louderme-desktop/latest.json
+          if ! git diff --cached --quiet; then
+            git commit -m "release: seed independent LouderMe Android and Windows update feeds"
+            git push origin HEAD:main
+          fi
+
+      - name: Check independent release and download URLs
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import json
+          from urllib.request import Request, urlopen
+          for path in ('louderme/latest.json', 'louderme-desktop/latest.json'):
+              data = json.load(open(path))
+              keys = ('apkUrl', 'releaseUrl') if path.startswith('louderme/') else ('installerUrl', 'portableUrl', 'releaseUrl')
+              for key in keys:
+                  url = data[key]
+                  prefix = 'https://github.com/michels-lab/LouderME-Releases/releases/'
+                  if not url.startswith(prefix):
+                      raise SystemExit(f'{path}: invalid release origin {url}')
+                  req = Request(url, method='HEAD', headers={'User-Agent':'MichelsLabReleaseAudit'})
+                  with urlopen(req, timeout=90) as response:
+                      if response.status != 200:
+                          raise SystemExit(f'{path}: HTTP {response.status}: {url}')
+              print('TARGET_URLS_OK', path, data['versionName'])
+          PY
+          echo 'Migration copied: old releases and both legacy updater manifests remain untouched.'
