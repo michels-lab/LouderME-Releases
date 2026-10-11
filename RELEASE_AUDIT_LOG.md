@@ -1,5 +1,15 @@
 # LouderMe — Public Release Channel Audit Log
 
+## 2026-10-11 — Completed product-exclusive release cleanup (follow-up)
+
+- **Owner clarification:** No LouderMe release entries should remain visible in Michel's Life, including historical entries.
+- **Verification before deletion:** every one of the 13 old LouderMe releases was already present in `michels-lab/LouderME-Releases` with equal asset names, byte sizes and GitHub SHA-256 digests. Deletion workflow refused unknown release tags or mismatches.
+- **Removal:** [one-time clean-up job 38136855295](https://github.com/michels-lab/michel-s-life-releases/actions/runs/38136855295) completed successfully. Removed exactly 13 original LouderMe releases and tags from Michel's Life release repository, without deleting any Michel's Life release; `v3.0.216` remained Latest.
+- **GitHub UI validation:** [Michel's Life releases](https://github.com/michels-lab/michel-s-life-releases/releases) now list zero LouderMe releases; [LouderMe releases](https://github.com/michels-lab/LouderME-Releases/releases) own their release history and current stable assets.
+- **Consequence:** historical **manually pinned GitHub binary** URLs under the old product's `/releases/download/louderme-*/...` paths have ceased working; consumers must use the dedicated LouderMe release URLs. Exactly two old `latest.json` update-feed *metadata aliases* stay in Michel's Life source tree solely because prior LouderMe builds hard-coded those feed paths; both refer to verified binaries hosted in this LouderMe-only repository. Obsolete old LouderMe docs/request files and one-time deletion workflows were removed after success.
+- **Safety:** no production binary was re-signed/rebuilt to clean up the old channel. The new Android v0.1.11 may have distinct signer continuity requirements; keep pre-migration legacy feeds on their compatible known baseline unless an in-place update has been verified. This clean-up does not itself authorize a new release.
+
+
 ## 2026-10-11 — Public-release repository isolation
 
 - **Problem:** historical LouderMe GitHub release assets and Windows/Android update manifests were publicly hosted inside `michels-lab/michel-s-life-releases`, making Michel's Life appear to have LouderMe as its Latest release.
