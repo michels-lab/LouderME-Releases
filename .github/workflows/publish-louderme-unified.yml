@@ -1,0 +1,110 @@
+name: Publish LouderMe unified release in dedicated channel
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'louderme/unified-source-request.json'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: louderme-unified-publish
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    name: Verify and publish Android and Windows
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Download and verify both platform releases
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          AV="$(jq -r '.android_version' louderme/unified-source-request.json)"
+          AVC="$(jq -r '.android_version_code' louderme/unified-source-request.json)"
+          WV="$(jq -r '.windows_version' louderme/unified-source-request.json)"
+          SOURCE_SHA="$(jq -r '.source_sha' louderme/unified-source-request.json)"
+          test -n "$AV" && test "$AV" != null
+          test -n "$WV" && test "$WV" != null
+          test -n "$SOURCE_SHA" && test "$SOURCE_SHA" != null
+          [[ "$AVC" =~ ^[0-9]+$ ]]
+          [[ "$SOURCE_SHA" =~ ^[0-9a-f]{40}$ ]]
+          export AV AVC WV SOURCE_SHA
+          mkdir -p dist
+
+          gh release download "v$AV" --repo michels-lab/LouderMe \
+            --pattern "LouderMe-v$AV-sideload.apk*" --dir dist
+          gh release download "desktop-v$WV" --repo michels-lab/LouderMe \
+            --pattern "LouderMe-Setup-v$WV.exe*" --dir dist
+          gh release download "desktop-v$WV" --repo michels-lab/LouderMe \
+            --pattern "LouderMe-Portable-v$WV.exe*" --dir dist
+
+          # Android source checksum records its original validated/ prefix;
+          # normalize by comparing the digest, not by trusting the path string.
+          APK_EXPECTED="$(awk '{print $1}' "dist/LouderMe-v$AV-sideload.apk.sha256")"
+          APK_ACTUAL="$(sha256sum "dist/LouderMe-v$AV-sideload.apk" | awk '{print $1}')"
+          test "$APK_EXPECTED" = "$APK_ACTUAL"
+          (
+            cd dist
+            sha256sum -c "LouderMe-Setup-v$WV.exe.sha256"
+            sha256sum -c "LouderMe-Portable-v$WV.exe.sha256"
+          )
+
+          # Verify the published APK was produced from the intended source SHA.
+          SOURCE_TAG_SHA="$(gh api "repos/michels-lab/LouderMe/git/ref/tags/v$AV" --jq '.object.sha')"
+          if [[ "$SOURCE_TAG_SHA" != "$SOURCE_SHA" ]]; then
+            echo "::error::Android source release tag does not match requested commit"
+            exit 1
+          fi
+
+          TAG="louderme-android-v$AV-desktop-v$WV"
+          BASE="https://github.com/michels-lab/LouderME-Releases/releases/download/$TAG"
+          RELEASE_URL="https://github.com/michels-lab/LouderME-Releases/releases/tag/$TAG"
+          export TAG BASE RELEASE_URL
+          printf 'LouderMe Android v%s + Windows Desktop v%s. Built and verified against source-repo release assets.\n' "$AV" "$WV" > release-notes.md
+          if gh release view "$TAG" >/dev/null 2>&1; then
+            gh release upload "$TAG" dist/* --clobber
+            gh release edit "$TAG" --title "LouderMe — Android v$AV + Windows v$WV" --notes-file release-notes.md
+          else
+            gh release create "$TAG" dist/* --title "LouderMe — Android v$AV + Windows v$WV" --notes-file release-notes.md
+          fi
+
+          python3 - <<'PY'
+          import json, os, hashlib
+          from pathlib import Path
+          av, wv, ac = os.environ['AV'], os.environ['WV'], int(os.environ['AVC'])
+          base, release_url = os.environ['BASE'], os.environ['RELEASE_URL']
+          def checksum(filename):
+              return hashlib.sha256((Path("dist") / filename).read_bytes()).hexdigest()
+          apk = f"LouderMe-v{av}-sideload.apk"
+          setup = f"LouderMe-Setup-v{wv}.exe"
+          portable = f"LouderMe-Portable-v{wv}.exe"
+          android = {
+              "schema": 1, "appId": "com.michelslab.louderme", "channel": "sideload",
+              "versionCode": ac, "versionName": av, "apkUrl": f"{base}/{apk}",
+              "sha256": checksum(apk), "releaseUrl": release_url,
+              "releaseNotes": "Michel's Lab unified stable release."
+          }
+          desktop = {
+              "schema": 1, "product": "LouderMe Desktop", "platform": "windows-x64",
+              "channel": "stable", "versionName": wv,
+              "installerUrl": f"{base}/{setup}", "installerSha256": checksum(setup),
+              "portableUrl": f"{base}/{portable}", "portableSha256": checksum(portable),
+              "releaseUrl": release_url
+          }
+          Path("louderme/latest.json").write_text(json.dumps(android, indent=2)+"\n", encoding="utf-8")
+          Path("louderme-desktop/latest.json").write_text(json.dumps(desktop, indent=2)+"\n", encoding="utf-8")
+          PY
+          git config user.name "Michel's Lab Release Bot"
+          git config user.email "realmichelduarte@gmail.com"
+          git add louderme/latest.json louderme-desktop/latest.json
+          if ! git diff --cached --quiet; then
+            git commit -m "release: unify LouderMe Android $AV and Desktop $WV"
+            git push
+          fi
