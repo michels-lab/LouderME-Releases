@@ -1,0 +1,9 @@
+{
+  "schema": 1,
+  "source": "michels-lab/michel-s-life-releases",
+  "destination": "michels-lab/LouderME-Releases",
+  "scope": "louderme-*",
+  "mode": "copy-and-verify",
+  "remove_source": false,
+  "requested_at": "2026-10-11"
+}
