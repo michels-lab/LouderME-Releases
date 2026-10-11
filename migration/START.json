@@ -5,5 +5,7 @@
   "scope": "louderme-*",
   "mode": "copy-and-verify",
   "remove_source": false,
-  "requested_at": "2026-10-11"
+  "requested_at": "2026-10-11",
+  "retry": 2,
+  "note": "Validate imported assets and both independent public update feeds after concurrent-commit recovery"
 }
