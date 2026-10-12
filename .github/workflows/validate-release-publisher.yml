@@ -1,0 +1,26 @@
+name: Validate LouderMe unified release publisher
+
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/publish-louderme-unified.yml"
+      - ".github/workflows/validate-release-publisher.yml"
+      - "tools/verify_publisher_workflow.py"
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/publish-louderme-unified.yml"
+      - ".github/workflows/validate-release-publisher.yml"
+      - "tools/verify_publisher_workflow.py"
+
+permissions:
+  contents: read
+
+jobs:
+  offline-validation:
+    name: Publisher Bash and immutable-asset regression
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify production publisher shell and synthetic existing release digests
+        run: python3 tools/verify_publisher_workflow.py

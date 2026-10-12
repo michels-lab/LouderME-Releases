@@ -31,12 +31,17 @@ jobs:
           AVC="$(jq -r '.android_version_code' louderme/unified-source-request.json)"
           WV="$(jq -r '.windows_version' louderme/unified-source-request.json)"
           SOURCE_SHA="$(jq -r '.source_sha' louderme/unified-source-request.json)"
+          # The two platform source tags may intentionally point to different commits.
+          WINDOWS_SOURCE_SHA="$(jq -r '.windows_source_sha // .source_sha' louderme/unified-source-request.json)"
           test -n "$AV" && test "$AV" != null
           test -n "$WV" && test "$WV" != null
           test -n "$SOURCE_SHA" && test "$SOURCE_SHA" != null
-          [[ "$AVC" =~ ^[0-9]+$ ]]
+          [[ "$AV" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]
+          [[ "$WV" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]
+          [[ "$AVC" =~ ^[1-9][0-9]*$ ]]
           [[ "$SOURCE_SHA" =~ ^[0-9a-f]{40}$ ]]
-          export AV AVC WV SOURCE_SHA
+          [[ "$WINDOWS_SOURCE_SHA" =~ ^[0-9a-f]{40}$ ]]
+          export AV AVC WV SOURCE_SHA WINDOWS_SOURCE_SHA
           mkdir -p dist
 
           gh release download "v$AV" --repo michels-lab/LouderMe \
@@ -63,6 +68,11 @@ jobs:
             echo "::error::Android source release tag does not match requested commit"
             exit 1
           fi
+          WINDOWS_TAG_SHA="$(gh api "repos/michels-lab/LouderMe/git/ref/tags/desktop-v$WV" --jq '.object.sha')"
+          if [[ "$WINDOWS_TAG_SHA" != "$WINDOWS_SOURCE_SHA" ]]; then
+            echo "::error::Windows source release tag does not match requested commit"
+            exit 1
+          fi
 
           TAG="louderme-android-v$AV-desktop-v$WV"
           BASE="https://github.com/michels-lab/LouderME-Releases/releases/download/$TAG"
@@ -70,8 +80,22 @@ jobs:
           export TAG BASE RELEASE_URL
           printf 'LouderMe Android v%s + Windows Desktop v%s. Built and verified against source-repo release assets.\n' "$AV" "$WV" > release-notes.md
           if gh release view "$TAG" >/dev/null 2>&1; then
-            gh release upload "$TAG" dist/* --clobber
-            gh release edit "$TAG" --title "LouderMe — Android v$AV + Windows v$WV" --notes-file release-notes.md
+            # Safe rerun: only proceed if ALL six existing release assets are
+            # byte-for-byte identical. Never --clobber a published binary.
+            gh api "repos/michels-lab/LouderME-Releases/releases/tags/$TAG" > existing-release.json
+            python3 - <<'PY'
+          import hashlib, json
+          from pathlib import Path
+          release = json.loads(Path("existing-release.json").read_text(encoding="utf-8"))
+          if release.get("draft") or release.get("prerelease"):
+              raise SystemExit("Existing release is draft/prerelease: refusing stable reuse")
+          remote = {a["name"]: a.get("digest") for a in release["assets"]}
+          local = {p.name: "sha256:" + hashlib.sha256(p.read_bytes()).hexdigest()
+                   for p in Path("dist").iterdir() if p.is_file()}
+          if len(remote) != len(release["assets"]) or remote != local:
+              raise SystemExit("Existing public release assets differ: refusing overwrite")
+          print("Existing release assets match exactly; safe to repair manifests if needed")
+          PY
           else
             gh release create "$TAG" dist/* --title "LouderMe — Android v$AV + Windows v$WV" --notes-file release-notes.md
           fi
