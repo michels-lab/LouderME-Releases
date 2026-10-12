@@ -30,3 +30,17 @@
 - **Source provenance:** Android `v0.1.11` source tag commit `3da93843afd235bf4dffaa6e6b053db42dfddc71` (versionCode 12), APK SHA-256 `5f433a6ad3d9437855b71cde0b0ce2e81d74864d7a53c663dc29b81f6c113ecf`; Windows `desktop-v0.1.11` source release already passed installation, startup and UI checks. No virtual driver/experimental native audio routing is included in the shipped Windows installer.
 - **Unified release:** [Android v0.1.11 + Windows v0.1.11](https://github.com/michels-lab/LouderME-Releases/releases/tag/louderme-android-v0.1.11-desktop-v0.1.11). [Official publisher 38136377304](https://github.com/michels-lab/LouderME-Releases/actions/runs/38136377304) completed successfully, verified checksums/source Android tag, uploaded all six binaries/checksum assets and updated `louderme/latest.json` and `louderme-desktop/latest.json`, both now at 0.1.11.
 - **Compatibility:** older installed Android Direct binaries must not be told to in-place update across this intentional signer change; legacy update URLs remain available for compatibility. New Direct APK (v0.1.11+) uses the dedicated LouderME release feed. Windows native driver hardware/system-wide audio remains a separate future milestone.
+
+## 2026-10-12 — LouderME v0.1.12 unified stable published
+
+- **Source:** `michels-lab/LouderMe` commit `ed0bd6da54c022ac05eba0b3760361f4bce056ff`; both `v0.1.12` and `desktop-v0.1.12` source tags point to that commit.
+- **Source release gates:** Android run `38217270239` passed permanent signing and final **signed release APK** installed emulator screenshots for Home/About at two viewports. Windows build run `38217270238` and release run `38217270242` passed installer launch/visual checks and asset creation.
+- **Public publication:** [run 38231448218](https://github.com/michels-lab/LouderME-Releases/actions/runs/38231448218) passed. [Public unified v0.1.12 release](https://github.com/michels-lab/LouderME-Releases/releases/tag/louderme-android-v0.1.12-desktop-v0.1.12) holds six artifacts, all matching source asset digests and published update feeds.
+- **Direct updater:** `louderme/latest.json` versionCode `13`, versionName `0.1.12`, APK SHA-256 `0947e7f6b21f4c5beb10ebebe914d3420586504aa0bac7de42d1a565625a68a7`. `louderme-desktop/latest.json` Windows `0.1.12`, Setup SHA-256 `9bc5def136fc35d01317e9892d599f6aefe5701758fafbf20941c0b459707501`, Portable SHA-256 `b18953af1fbd5d023a828c37eb8b691b1ee88297e91fa9ab6e684de670dcd324`.
+- **No implied physical validation:** hardware audio, virtual driver, Windows Authenticode and Play Store publication remain outside this release evidence.
+
+## 2026-10-12 — Publisher source and immutability hardening candidate
+
+- **Finding:** previous publisher verified Android source tag but not Windows tag and allowed `--clobber` of published release assets on rerun. That could silently mutate a public binary without changing the release identity.
+- **Correction in review:** enforce Windows source tag against optional `windows_source_sha` (defaults to `source_sha` for coordinated builds); validate release version syntax; reruns compare all six published GitHub SHA-256 asset digests with the exact verified source binaries and refuse any mismatch. Matching reruns may still repair incomplete update manifests without re-uploading assets.
+- **Status:** code review and syntax/CI validation required before merge. No additional binary release needed for this maintenance.
