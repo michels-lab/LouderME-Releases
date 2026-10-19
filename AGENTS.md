@@ -13,3 +13,7 @@ After submitting a PR or starting a build, check, review or external verificatio
 - Preserve immutable historical download URLs and verified SHA-256/provenance; do not infer a signed or installed pass from a build pass.
 - Documentation and agent-governance changes must not touch release-intent triggers or publish workflows.
 - Keep product-specific release audit/history in this distribution repository; shared policy belongs in the master.
+
+## GRANADA — Regla permanente de continuación del propietario
+
+Cuando el propietario diga **GRANADA**, se aparca con trazabilidad cualquier pendiente inacabado/bloqueado/en QA/propiedad de otra rama, y se aborda **el siguiente bloque grande independiente**. Consultar primero `.michelslab/GRANADA.md` y la norma maestra `standards/GRANADA_CONTINUOUS_BLOCK_PROTOCOL.md`; respetar claims, PRs y colisiones de archivos. Registrar SHA, tests y punto de retorno; no cerrar pendientes falsamente ni publicar releases sin autorización.
