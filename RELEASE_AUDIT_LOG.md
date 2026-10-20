@@ -1,3 +1,11 @@
+## 2026-10-20 — GRANADA ambiciosa: macro-bloques multi-entregable (regla adoptada)
+
+**Orden del propietario:** evitar correcciones mínimas encadenadas; elegir campañas de desarrollo con aproximadamente **3–6 paquetes sustanciales relacionados y no interferentes**, cuando el backlog lo permita. Cada paquete debe entregar código/experiencia tangible, recuperar estados y bordes, añadir pruebas de regresión y documentar las verificaciones reales. El tamaño no justifica pisar ramas/claims, mezclar cuentas, omitir QA ni dar por concluida una aceptación física pendiente. Si algún paquete está bloqueado por login, hardware, CI o release, aparcarlo con issue/PR/SHA y continuar con otro trabajo seguro. El objetivo es hacer más, **no aparentarlo**. [Estándar maestro](https://github.com/michels-lab/Michel-Software-Standards/blob/main/standards/OPERACION_GRANADA_STANDARD.md).
+
+**Objetivo de producto para próximas Granadas:** Read-only distribution audit, manifests, installation/update evidence, SHA256/checksums and links. Never publish release, alter binary or tags without explicit authorization.
+
+**Estado de esta entrada:** adopción del protocolo únicamente; no afirma nueva funcionalidad, tests completados, integración de código ni publicación. Todo release/producción exige autorización expresa. Conservar los PRs y pendientes previamente registrados.
+
 # LouderMe — Public Release Channel Audit Log
 
 ## 2026-10-11 — Completed product-exclusive release cleanup (follow-up)
