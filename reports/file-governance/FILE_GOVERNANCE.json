@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "audit_kind": "deterministic_full_tracked_tree",
-  "tracked_files_total": 23,
-  "classified_files_total": 19,
+  "tracked_files_total": 24,
+  "classified_files_total": 20,
   "docs_content_inspected": 4,
   "large_docs_skipped": 0,
   "excluded_reports": 4,
@@ -14,11 +14,11 @@
     "index": 1,
     "source": 2,
     "test": 1,
-    "workflow": 4
+    "workflow": 5
   },
   "finding_counts": {},
   "finding_total": 0,
-  "inventory_fingerprint": "752298a814f1997c3a3deea4ce977d1beab4167446f3de4eef8ac541e38f9b6f",
+  "inventory_fingerprint": "c0764428274ae8388ad8a67e7bcaf1935af95e069c07c29ac6608c439504fe52",
   "evidence_fingerprint": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
   "files": [
     {
@@ -27,6 +27,13 @@
       "purpose": "GitHub Actions automation",
       "certainty": "rule",
       "blob": "66ee07eb920dee77f0843a96763056e85ca8532a"
+    },
+    {
+      "path": ".github/workflows/file-steward-pr-validation.yml",
+      "role": "workflow",
+      "purpose": "GitHub Actions automation",
+      "certainty": "rule",
+      "blob": "5163f5e1348f32b455d7791aea6b4a5d649a9f31"
     },
     {
       "path": ".github/workflows/import-louderme-history.yml",
@@ -61,7 +68,7 @@
       "role": "agent",
       "purpose": "assistant role/instructions",
       "certainty": "rule",
-      "blob": "b1d01e48c04023ad108846e6f554987ed2fd56aa"
+      "blob": "b6eaec3b92e4637203ddeb61fdb7c530be158ff2"
     },
     {
       "path": ".michelslab/file-audit-policy.json",
@@ -138,14 +145,14 @@
       "role": "source",
       "purpose": "code/test implementation",
       "certainty": "rule",
-      "blob": "5233e1e0466ce9bf333e24177d66e21b7d8fef84"
+      "blob": "1127adeaf24bdfab9e2ac3eebd118115724765b9"
     },
     {
       "path": "tools/test_repository_file_auditor.py",
       "role": "test",
       "purpose": "code/test implementation",
       "certainty": "rule",
-      "blob": "de43a587db0cf63a8dbe1045e00a81704b4a0d75"
+      "blob": "592059f768dc3a24cf28a1466b5a846fc88aa56d"
     },
     {
       "path": "tools/verify_publisher_workflow.py",
