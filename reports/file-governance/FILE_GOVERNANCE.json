@@ -1,0 +1,165 @@
+{
+  "schema_version": 1,
+  "audit_kind": "deterministic_full_tracked_tree",
+  "tracked_files_total": 19,
+  "classified_files_total": 19,
+  "docs_content_inspected": 4,
+  "large_docs_skipped": 0,
+  "excluded_reports": 0,
+  "roles": {
+    "agent": 2,
+    "bitacora": 1,
+    "config": 6,
+    "document": 2,
+    "index": 1,
+    "source": 2,
+    "test": 1,
+    "workflow": 4
+  },
+  "finding_counts": {},
+  "finding_total": 0,
+  "inventory_fingerprint": "b4234d2070dcade11643356bc771ddd0d90ac417e661c5c66cbede41df6fb7b5",
+  "evidence_fingerprint": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+  "files": [
+    {
+      "path": ".github/workflows/file-governance-audit.yml",
+      "role": "workflow",
+      "purpose": "GitHub Actions automation",
+      "certainty": "rule",
+      "blob": "66ee07eb920dee77f0843a96763056e85ca8532a"
+    },
+    {
+      "path": ".github/workflows/import-louderme-history.yml",
+      "role": "workflow",
+      "purpose": "GitHub Actions automation",
+      "certainty": "rule",
+      "blob": "635d211b1cdf5be1e2c73412a25bbac759fc0b15"
+    },
+    {
+      "path": ".github/workflows/publish-louderme-unified.yml",
+      "role": "workflow",
+      "purpose": "GitHub Actions automation",
+      "certainty": "rule",
+      "blob": "2b8292f5bbee01bdef354273144df0ec9d44278d"
+    },
+    {
+      "path": ".github/workflows/validate-release-publisher.yml",
+      "role": "workflow",
+      "purpose": "GitHub Actions automation",
+      "certainty": "rule",
+      "blob": "1553d757920d43d16dd83e1afa088272894b4f3f"
+    },
+    {
+      "path": ".michelslab/GRANADA.md",
+      "role": "document",
+      "purpose": "manual/decision/report/historical note",
+      "certainty": "inferred",
+      "blob": "52509a533739497e7f74214ff1a7a77939f90f28"
+    },
+    {
+      "path": ".michelslab/agents/file-steward.md",
+      "role": "agent",
+      "purpose": "assistant role/instructions",
+      "certainty": "rule",
+      "blob": "b1d01e48c04023ad108846e6f554987ed2fd56aa"
+    },
+    {
+      "path": ".michelslab/file-audit-policy.json",
+      "role": "config",
+      "purpose": "machine-readable configuration",
+      "certainty": "rule",
+      "blob": "160c882432cdcc5b033de55e5614d17ae33c5890"
+    },
+    {
+      "path": ".michelslab/project.yml",
+      "role": "config",
+      "purpose": "machine-readable configuration",
+      "certainty": "rule",
+      "blob": "2ca012c6e2eed23ce21e0322c5d893ebb6410e6e"
+    },
+    {
+      "path": "AGENTS.md",
+      "role": "agent",
+      "purpose": "assistant role/instructions",
+      "certainty": "rule",
+      "blob": "9ea794b00f2f64ad7d28283af611c79faa8e6b1b"
+    },
+    {
+      "path": "MICHELS_LAB_PROJECT.md",
+      "role": "document",
+      "purpose": "manual/decision/report/historical note",
+      "certainty": "inferred",
+      "blob": "0b9ec50dd63c31bb0950ec0a518c7325032d4d49"
+    },
+    {
+      "path": "README.md",
+      "role": "index",
+      "purpose": "navigation/onboarding",
+      "certainty": "rule",
+      "blob": "4b599dde48d7c3b17654a228882d8371b822d872"
+    },
+    {
+      "path": "RELEASE_AUDIT_LOG.md",
+      "role": "bitacora",
+      "purpose": "technical/audit change history",
+      "certainty": "rule",
+      "blob": "f6c742871cf441623c6a5a0177fb7aba6d5769ef"
+    },
+    {
+      "path": "louderme-desktop/latest.json",
+      "role": "config",
+      "purpose": "machine-readable configuration",
+      "certainty": "rule",
+      "blob": "d2c69b4c24ab3a34fa55af97adebdd904db4d28f"
+    },
+    {
+      "path": "louderme/latest.json",
+      "role": "config",
+      "purpose": "machine-readable configuration",
+      "certainty": "rule",
+      "blob": "2f5103e15bf1b2bb8284cddf637a8dc0f2ba3ce7"
+    },
+    {
+      "path": "louderme/unified-source-request.json",
+      "role": "config",
+      "purpose": "machine-readable configuration",
+      "certainty": "rule",
+      "blob": "f8f7893a9d397ffe5899194a03c4de2f5a4fb641"
+    },
+    {
+      "path": "migration/START.json",
+      "role": "config",
+      "purpose": "machine-readable configuration",
+      "certainty": "rule",
+      "blob": "d71b19f42296c7b60909dce402c7f6c8e31ff5c0"
+    },
+    {
+      "path": "tools/repository_file_auditor.py",
+      "role": "source",
+      "purpose": "code/test implementation",
+      "certainty": "rule",
+      "blob": "fe0546a76c0cf308c99f0cc4f1c11aa0677496ec"
+    },
+    {
+      "path": "tools/test_repository_file_auditor.py",
+      "role": "test",
+      "purpose": "code/test implementation",
+      "certainty": "rule",
+      "blob": "b94da69cd18c8066756acba162bc66618261b522"
+    },
+    {
+      "path": "tools/verify_publisher_workflow.py",
+      "role": "source",
+      "purpose": "code/test implementation",
+      "certainty": "rule",
+      "blob": "16eaca3e5c8a602a78115ef6eb977ac844701950"
+    }
+  ],
+  "findings": [],
+  "untracked_audited": false,
+  "ignored_audited": false,
+  "binary_contents_audited": false,
+  "scientific_validation": "NOT_CHECKED",
+  "app_installed_acceptance": "NOT_CHECKED",
+  "deletion_approved": false
+}
