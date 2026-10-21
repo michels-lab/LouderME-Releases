@@ -1,5 +1,10 @@
 # Michel's Lab — LouderMe distribution agent rules
 
+## Owner's Granada release authority — 2026-10-21
+
+When the owner invokes **Operación Granada for this specific product**, agents MAY complete release integration, final versioning and **publish the official final STABLE release** without asking for a second release command, **only after all product-specific current-SHA tests, installed/device/runtime/scientific/privacy gates, validated artifacts, signing/integrity and update/distribution requirements have passed**. It is conditional authority, NOT an instruction to ship unfinished code on every Granada. **No RC, beta, prerelease, preview release or publication for other products.** A distribution repository may receive only its own app's verified final assets, never initiate independent releases. Follow master `GLOBAL_RULES.md` and `standards/RELEASE_PROTOCOL.md`; record tag, provenance, published assets and exact result. If any gate is missing, do not release and continue another independent block.
+
+
 This repository is a **public binary/update distribution channel**, not the application's source repository. The source lives in `michels-lab/LouderMe`. The cross-project policy authority is `michels-lab/Michel-Software-Standards`: read its current `GLOBAL_RULES.md`, `standards/REPOSITORY_DISTRIBUTION_STANDARD.md` and `docs/AGENT_OPERATING_PROTOCOL.md` before making changes. Application-only managed child-agent blocks are not copied to distribution repositories.
 
 ## Continuous independent work while CI runs (mandatory)
@@ -8,7 +13,7 @@ After submitting a PR or starting a build, check, review or external verificatio
 
 ## Distribution safety boundaries
 
-- No release creation, tag, upload, asset overwrite, update-feed modification or provider submission without explicit owner authorization and exact same-artifact validation.
+- No release creation, tag, upload, asset overwrite, update-feed modification or provider submission without owner authorization (including targeted Granada after all product gates pass) and exact same-artifact validation.
 - Never publish an artifact for a different Michel's Lab product in this channel.
 - Preserve immutable historical download URLs and verified SHA-256/provenance; do not infer a signed or installed pass from a build pass.
 - Documentation and agent-governance changes must not touch release-intent triggers or publish workflows.
