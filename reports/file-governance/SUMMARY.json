@@ -1,11 +1,11 @@
 {
   "schema_version": 1,
   "audit_kind": "deterministic_full_tracked_tree",
-  "tracked_files_total": 19,
+  "tracked_files_total": 23,
   "classified_files_total": 19,
   "docs_content_inspected": 4,
   "large_docs_skipped": 0,
-  "excluded_reports": 0,
+  "excluded_reports": 4,
   "roles": {
     "agent": 2,
     "bitacora": 1,
@@ -18,7 +18,7 @@
   },
   "finding_counts": {},
   "finding_total": 0,
-  "inventory_fingerprint": "b4234d2070dcade11643356bc771ddd0d90ac417e661c5c66cbede41df6fb7b5",
+  "inventory_fingerprint": "0cf3ad7791404de6081614ef02a340adcc1b39ad41de7b16b8fbf249414c7e16",
   "evidence_fingerprint": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
   "untracked_audited": false,
   "ignored_audited": false,
