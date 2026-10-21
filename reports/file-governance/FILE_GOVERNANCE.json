@@ -18,7 +18,7 @@
   },
   "finding_counts": {},
   "finding_total": 0,
-  "inventory_fingerprint": "0cf3ad7791404de6081614ef02a340adcc1b39ad41de7b16b8fbf249414c7e16",
+  "inventory_fingerprint": "752298a814f1997c3a3deea4ce977d1beab4167446f3de4eef8ac541e38f9b6f",
   "evidence_fingerprint": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
   "files": [
     {
@@ -138,14 +138,14 @@
       "role": "source",
       "purpose": "code/test implementation",
       "certainty": "rule",
-      "blob": "3f704fa24a27aa107914d85b772b32227ffd82fa"
+      "blob": "5233e1e0466ce9bf333e24177d66e21b7d8fef84"
     },
     {
       "path": "tools/test_repository_file_auditor.py",
       "role": "test",
       "purpose": "code/test implementation",
       "certainty": "rule",
-      "blob": "ebac5d9cfe86ff3c1e94b96468027a6578d1d708"
+      "blob": "de43a587db0cf63a8dbe1045e00a81704b4a0d75"
     },
     {
       "path": "tools/verify_publisher_workflow.py",
