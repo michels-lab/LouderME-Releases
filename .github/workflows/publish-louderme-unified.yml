@@ -128,8 +128,33 @@ jobs:
           PY
           git config user.name "Michel's Lab Release Bot"
           git config user.email "realmichelduarte@gmail.com"
+
+          # The File Steward may push a disjoint audit commit while this job
+          # downloads/verifies source binaries. Never force-push or clobber
+          # a newer feed; rebase our exact verified two-file commit and retry.
+          push_verified_updater_feeds() {
+            local attempt
+            for attempt in 1 2 3 4; do
+              if git push origin HEAD:refs/heads/main; then
+                echo "Verified LouderMe updater manifests pushed on attempt $attempt"
+                return 0
+              fi
+              if [[ "$attempt" -eq 4 ]]; then
+                break
+              fi
+              git fetch --no-tags origin main
+              if ! git rebase FETCH_HEAD; then
+                git rebase --abort || true
+                echo "::error::Publisher manifest conflict: refusing to replace updated feeds"
+                return 1
+              fi
+            done
+            echo "::error::Verified updater manifests could not be published in four attempts"
+            return 1
+          }
+
           git add louderme/latest.json louderme-desktop/latest.json
           if ! git diff --cached --quiet; then
             git commit -m "release: unify LouderMe Android $AV and Desktop $WV"
-            git push
+            push_verified_updater_feeds
           fi
