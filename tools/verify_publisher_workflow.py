@@ -101,9 +101,123 @@ def run_fixture(code: str, *, mutation: str) -> subprocess.CompletedProcess[str]
         )
 
 
+def verified_push_function(shell: str) -> str:
+    """Use production's exact Bash retry function, not a duplicated mock."""
+    marker = "push_verified_updater_feeds() {\n"
+    if shell.count(marker) != 1:
+        raise AssertionError("Expected exactly one verified feed push function")
+    start = shell.index(marker)
+    end = shell.find("\n}\n", start)
+    if end == -1:
+        raise AssertionError("Verified feed function is unterminated")
+    return shell[start : end + 3] + "\n"
+
+
+def run_git(*args: str, cwd: Path | None = None) -> str:
+    command = subprocess.run(
+        ["git", *args], cwd=cwd, capture_output=True, text=True
+    )
+    if command.returncode:
+        raise AssertionError(
+            f"git {args} failed: {command.stdout} {command.stderr}"
+        )
+    return command.stdout.strip()
+
+
+def test_concurrent_manifest_push(shell: str, *, conflicting: bool) -> None:
+    """Real, offline Git race: disjoint audit succeeds; conflicting feed fails."""
+    with tempfile.TemporaryDirectory(prefix="louderme-git-push-") as tmp:
+        root = Path(tmp)
+        remote = root / "remote.git"
+        run_git("init", "--bare", "--initial-branch=main", str(remote))
+        seed = root / "seed"
+        run_git("clone", str(remote), str(seed))
+        run_git("config", "user.email", "seed@example.invalid", cwd=seed)
+        run_git("config", "user.name", "QA Seed", cwd=seed)
+        (seed / "louderme").mkdir()
+        (seed / "louderme-desktop").mkdir()
+        (seed / "docs").mkdir()
+        (seed / "louderme/latest.json").write_text("android-v0.1.12\n")
+        (seed / "louderme-desktop/latest.json").write_text("windows-v0.1.13\n")
+        (seed / "docs/audit.md").write_text("initial audit\n")
+        run_git("add", ".", cwd=seed)
+        run_git("commit", "-m", "initial", cwd=seed)
+        run_git("push", "origin", "main", cwd=seed)
+
+        pub, steward = root / "publisher", root / "steward"
+        for clone in (pub, steward):
+            run_git("clone", str(remote), str(clone))
+            run_git("config", "user.email", "qa@example.invalid", cwd=clone)
+            run_git("config", "user.name", "QA Publisher", cwd=clone)
+
+        # The publisher's verified source release was not yet pushed.
+        (pub / "louderme/latest.json").write_text("android-v0.1.12-new-url\n")
+        (pub / "louderme-desktop/latest.json").write_text("windows-v0.1.14\n")
+        run_git("add", "louderme/latest.json", "louderme-desktop/latest.json", cwd=pub)
+        run_git("commit", "-m", "validated released manifests", cwd=pub)
+
+        if conflicting:
+            (steward / "louderme-desktop/latest.json").write_text(
+                "windows-v0.1.15-unrelated\n"
+            )
+        else:
+            (steward / "docs/audit.md").write_text("new independent audit\n")
+        run_git("add", ".", cwd=steward)
+        run_git("commit", "-m", "concurrent auditor", cwd=steward)
+        audit_sha = run_git("rev-parse", "HEAD", cwd=steward)
+        run_git("push", "origin", "main", cwd=steward)
+
+        executed = subprocess.run(
+            ["bash", "-c", verified_push_function(shell)
+             + "\npush_verified_updater_feeds\n"],
+            cwd=pub, capture_output=True, text=True, timeout=30,
+        )
+        remote_desktop = run_git(
+            "--git-dir", str(remote), "show",
+            "main:louderme-desktop/latest.json",
+        )
+        remote_android = run_git(
+            "--git-dir", str(remote), "show", "main:louderme/latest.json"
+        )
+        remote_audit = run_git(
+            "--git-dir", str(remote), "show", "main:docs/audit.md"
+        )
+        main_sha = run_git("--git-dir", str(remote), "rev-parse", "main")
+        run_git(
+            "--git-dir", str(remote), "merge-base",
+            "--is-ancestor", audit_sha, main_sha
+        )
+        if conflicting:
+            if executed.returncode == 0 or remote_desktop != "windows-v0.1.15-unrelated":
+                raise AssertionError(
+                    "Conflicting/stale publisher silently rewrote a newer updater feed"
+                )
+            if remote_android != "android-v0.1.12":
+                raise AssertionError("Conflicting release partially changed the Android feed")
+        else:
+            if (executed.returncode != 0
+                    or remote_desktop != "windows-v0.1.14"
+                    or remote_android != "android-v0.1.12-new-url"
+                    or remote_audit != "new independent audit"):
+                raise AssertionError(
+                    f"Disjoint File Steward commit blocked verified release recovery: "
+                    f"{executed.stdout} {executed.stderr}"
+                )
+
+
 def main() -> int:
     shell = shell_body()
     assert_publisher_shell(shell)
+    for required in (
+        "git push origin HEAD:refs/heads/main",
+        "git fetch --no-tags origin main",
+        "git rebase FETCH_HEAD",
+        "git rebase --abort",
+    ):
+        if required not in shell:
+            raise AssertionError("Fail-closed concurrent publish recovery missing: " + required)
+    test_concurrent_manifest_push(shell, conflicting=False)
+    test_concurrent_manifest_push(shell, conflicting=True)
     guard = existing_release_guard(shell)
     for mutation, allowed in (
         ("matching", True),
@@ -119,7 +233,7 @@ def main() -> int:
                 f"Fixture {mutation} got rc={result.returncode}; "
                 f"stdout={result.stdout}; stderr={result.stderr}"
             )
-    print("PASS: publisher Bash syntax, tag guards, and six immutable-asset test cases")
+    print("PASS: publisher Bash, immutable-asset guards, concurrent audit recovery, and manifest conflict rejection")
     return 0
 
 
