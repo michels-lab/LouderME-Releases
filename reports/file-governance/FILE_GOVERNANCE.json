@@ -1,16 +1,16 @@
 {
   "schema_version": 1,
   "audit_kind": "deterministic_full_tracked_tree",
-  "tracked_files_total": 26,
-  "classified_files_total": 22,
-  "docs_content_inspected": 6,
+  "tracked_files_total": 27,
+  "classified_files_total": 23,
+  "docs_content_inspected": 7,
   "large_docs_skipped": 0,
   "excluded_reports": 4,
   "roles": {
     "agent": 2,
     "bitacora": 1,
     "config": 6,
-    "document": 4,
+    "document": 5,
     "index": 1,
     "source": 2,
     "test": 1,
@@ -18,7 +18,7 @@
   },
   "finding_counts": {},
   "finding_total": 0,
-  "inventory_fingerprint": "3ac2acdd3faf10bb5912dacc044fec3da2e36ce79dd8bbb65a5d6d6772c8907c",
+  "inventory_fingerprint": "3d3cf47597084ccfeb5e591a96ccfbf67a397ee88a46af167f36f1f170d52ea3",
   "evidence_fingerprint": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
   "files": [
     {
@@ -127,6 +127,13 @@
       "blob": "2c9e7bae2019a22a58f771bbafbb82594aea8d9d"
     },
     {
+      "path": "docs/audits/GRANADA_2026-10-23_WINDOWS_OFFICIAL_LOGO_015_PUBLISH.md",
+      "role": "document",
+      "purpose": "manual/decision/report/historical note",
+      "certainty": "inferred",
+      "blob": "7ab08beb0b9cfb0828cc89d0bcd747f504e88cd0"
+    },
+    {
       "path": "louderme-desktop/latest.json",
       "role": "config",
       "purpose": "machine-readable configuration",
@@ -145,7 +152,7 @@
       "role": "config",
       "purpose": "machine-readable configuration",
       "certainty": "rule",
-      "blob": "e2c05867a96ece94b4e29440cb0ebf69fb30058c"
+      "blob": "70060f5cc009ec0d6a2d83b191a00a279147b021"
     },
     {
       "path": "migration/START.json",
