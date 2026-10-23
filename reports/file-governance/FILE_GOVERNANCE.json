@@ -18,7 +18,7 @@
   },
   "finding_counts": {},
   "finding_total": 0,
-  "inventory_fingerprint": "5d4e8d6388b237f6215fd4794ba6d935ffccf478060895a9652ea718c9ae43dd",
+  "inventory_fingerprint": "3ac2acdd3faf10bb5912dacc044fec3da2e36ce79dd8bbb65a5d6d6772c8907c",
   "evidence_fingerprint": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
   "files": [
     {
@@ -47,7 +47,7 @@
       "role": "workflow",
       "purpose": "GitHub Actions automation",
       "certainty": "rule",
-      "blob": "2b8292f5bbee01bdef354273144df0ec9d44278d"
+      "blob": "4c37e5ffa98db47f7c133ebee3052768dfb329bc"
     },
     {
       "path": ".github/workflows/validate-release-publisher.yml",
@@ -124,7 +124,7 @@
       "role": "document",
       "purpose": "manual/decision/report/historical note",
       "certainty": "inferred",
-      "blob": "ccbc2a12b00ac8fc2b2ed929440b2c27b11583c9"
+      "blob": "2c9e7bae2019a22a58f771bbafbb82594aea8d9d"
     },
     {
       "path": "louderme-desktop/latest.json",
@@ -173,7 +173,7 @@
       "role": "source",
       "purpose": "code/test implementation",
       "certainty": "rule",
-      "blob": "16eaca3e5c8a602a78115ef6eb977ac844701950"
+      "blob": "9f8494691ddf6aa2899334851d1bceb64bc10860"
     }
   ],
   "findings": [],
