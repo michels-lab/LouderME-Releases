@@ -2,7 +2,7 @@
 
 This **public binary distribution** repository belongs to **Michel's Lab** and is reserved exclusively for **LouderMe**. Development source code belongs to [michels-lab/LouderMe](https://github.com/michels-lab/LouderMe); Michel's Life is a completely separate application and distribution channel.
 
-**Latest GitHub-published unified release (API checked 2026-10-21):** [Android v0.1.12 + Windows Desktop v0.1.13](https://github.com/michels-lab/LouderME-Releases/releases/tag/louderme-android-v0.1.12-desktop-v0.1.13), published 2026-10-12; six assets including APK, Setup, Portable and SHA-256 sidecars. This metadata check does not validate real audio output.
+**Latest GitHub-published unified release (API checked 2026-10-23):** [Android v0.1.12 + Windows Desktop v0.1.14](https://github.com/michels-lab/LouderME-Releases/releases/tag/louderme-android-v0.1.12-desktop-v0.1.14), published 2026-10-23; six validated release assets (original Android APK, Windows Setup/Portable, and SHA-256 sidecars). The Windows maintenance update restores a crashed −18 dB diagnostic; real audible Windows Boost/EQ still requires correctly attached Equalizer APO, and physical audio was not independently measured.
 
 [Operación Granada — auditoría del repo de distribución y plugins](docs/GRANADA_DISTRIBUTION_PLUGIN_AUDIT_2026-10-21.md).
 
