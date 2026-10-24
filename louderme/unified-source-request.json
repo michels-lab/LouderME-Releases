@@ -1,7 +1,7 @@
 {
   "android_version": "0.1.12",
   "android_version_code": 13,
-  "windows_version": "0.1.15",
+  "windows_version": "0.1.16",
   "source_sha": "ed0bd6da54c022ac05eba0b3760361f4bce056ff",
-  "windows_source_sha": "af8f8ef1f2e5d1e0ef29eb3e4801b89a60e0ec0e"
+  "windows_source_sha": "dd6c5d9ff16d0045de79afe3881fea98c123bc6f"
 }
