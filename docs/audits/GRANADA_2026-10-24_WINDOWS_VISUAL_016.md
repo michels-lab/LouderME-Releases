@@ -16,3 +16,14 @@ Date: 2026-10-24. Product owner evidence: public Windows v0.1.15 displayed blank
 5. If publisher fails due Git push race, recover with the dedicated fail-closed workflow; do not assume creating release assets implies successful feed synchronization.
 
 No RC, no changes to other apps, and no false claim that Equalizer APO has been replaced by a certified native Windows virtual audio driver.
+
+## Verified stable public release — postflight (2026-10-24)
+
+**COMPLETED SUCCESS**, not merely staged:
+- LouderMe product visual fix PR #107 main SHA `796c857e5128d4fbfa120e6e1eb091f0f7dbced8`. Verified real installed Windows Home/About/EQ screenshots in both compact/wide and Android nonregression at exact PR head, before merge.
+- Windows-only source release PR #108 main SHA `dd6c5d9ff16d0045de79afe3881fea98c123bc6f`. Windows source release Actions `40118618061` completed SUCCESS. Stable source tag `desktop-v0.1.16` references exactly this SHA; four Windows executable/checksum assets uploaded.
+- Unified distributor PR #10 merged SHA `a136f7608c61d00e32c42d12f764b20af0a41b58`. Dedicated publisher Actions `40118850133` completed **SUCCESS**. Public stable tag `louderme-android-v0.1.12-desktop-v0.1.16` is NOT a draft or prerelease, and has six real nonzero assets.
+- Windows Setup `LouderMe-Setup-v0.1.16.exe`: SHA-256 `23992394d5dd89b712289aa27a6fa40c88e04a956eb67b09a15c4050ff263ac5`; Portable `LouderMe-Portable-v0.1.16.exe`: SHA-256 `7170452e6bb5bed30a4ec2204284e8b8b728f02db2a2c2fa44d1012d57b38550`.
+- Android `LouderMe-v0.1.12-sideload.apk`: SHA-256 `0947e7f6b21f4c5beb10ebebe914d3420586504aa0bac7de42d1a565625a68a7`, **byte-identical digest** to preceding public v0.1.15 unified release, original code 13, no APK rebuild or re-sign.
+- The publisher verified both platform assets and wrote BOTH public update manifests: `louderme-desktop/latest.json` advertises Windows **0.1.16** with exact Setup/Portable digests; `louderme/latest.json` retains Android **0.1.12** and its original APK digest, both point to the new combined release. The previous v0.1.15 stable tag remains available.
+- This is verified release integrity and UI-layout proof. Equalizer APO must still be configured on the playback endpoint; neither UI screenshot, release CI, nor a displayed EQ graph proves actual physical acoustic gain or native SysVAD driver compatibility.
