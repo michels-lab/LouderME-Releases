@@ -4,8 +4,8 @@
   "channel": "sideload",
   "versionCode": 13,
   "versionName": "0.1.12",
-  "apkUrl": "https://github.com/michels-lab/LouderME-Releases/releases/download/louderme-android-v0.1.12-desktop-v0.1.16/LouderMe-v0.1.12-sideload.apk",
+  "apkUrl": "https://github.com/michels-lab/LouderME-Releases/releases/download/louderme-android-v0.1.12-desktop-v0.1.17/LouderMe-v0.1.12-sideload.apk",
   "sha256": "0947e7f6b21f4c5beb10ebebe914d3420586504aa0bac7de42d1a565625a68a7",
-  "releaseUrl": "https://github.com/michels-lab/LouderME-Releases/releases/tag/louderme-android-v0.1.12-desktop-v0.1.16",
+  "releaseUrl": "https://github.com/michels-lab/LouderME-Releases/releases/tag/louderme-android-v0.1.12-desktop-v0.1.17",
   "releaseNotes": "Michel's Lab unified stable release."
 }
