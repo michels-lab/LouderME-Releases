@@ -18,7 +18,7 @@
   },
   "finding_counts": {},
   "finding_total": 0,
-  "inventory_fingerprint": "038babbd3b998583cc610319b3d4a0bc6cc5c1b87c8b399f2ba79ad4c52d4a26",
+  "inventory_fingerprint": "a9a59214b5a27c62dd3b68d907e8b634c1d603d6f42657a25d7f9e0c6900e792",
   "evidence_fingerprint": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
   "files": [
     {
@@ -103,14 +103,14 @@
       "role": "index",
       "purpose": "navigation/onboarding",
       "certainty": "rule",
-      "blob": "bf8d2b1bb18f90d061bf7489d85c69ed06f8b87a"
+      "blob": "29ef2ff34e52f24dd22f6eced66a1228443ab762"
     },
     {
       "path": "RELEASE_AUDIT_LOG.md",
       "role": "bitacora",
       "purpose": "technical/audit change history",
       "certainty": "rule",
-      "blob": "d8cfdb31883bbd469ae6713bdb99c35798ff4717"
+      "blob": "c943ff34444a117804e4ebe04d693847431ebf14"
     },
     {
       "path": "docs/GRANADA_DISTRIBUTION_PLUGIN_AUDIT_2026-10-21.md",
@@ -145,14 +145,14 @@
       "role": "config",
       "purpose": "machine-readable configuration",
       "certainty": "rule",
-      "blob": "31b66f7acefda01bd8daf7c665245397d4d31f7a"
+      "blob": "b3cd5f207c269fe8d31ba615ba19ed29ca545983"
     },
     {
       "path": "louderme/latest.json",
       "role": "config",
       "purpose": "machine-readable configuration",
       "certainty": "rule",
-      "blob": "01f689de83d36d79e42ea6e0c3f94b4044f74bf7"
+      "blob": "8b19c4727aee1c75abb2ef9a0c7bc9300025bcfb"
     },
     {
       "path": "louderme/unified-source-request.json",
