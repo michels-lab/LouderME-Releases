@@ -1,3 +1,13 @@
+## 2026-11-10 — Final LouderMe unified stable release, verified
+
+- **Explicit owner authorization:** "op granada y dale release"; versions Android Direct v0.1.13 (`versionCode 14`) and Windows Desktop v0.1.18; final only, no RC/beta.
+- **Source provenance:** both source tags `michels-lab/LouderMe@v0.1.13` and `@desktop-v0.1.18` point to `01702015f1242775a474dfd9c7544207d4ccc23b`, squash of PR #164. Windows source workflow run `42875824138` succeeded; Android release workflow `42875824043` succeeded with permanent signer, signed final APK emulator Home/About, Developer installed, flavor permissions and screenshot evidence.
+- **Public distribution:** `louderme-android-v0.1.13-desktop-v0.1.18` ([official tag](https://github.com/michels-lab/LouderME-Releases/releases/tag/louderme-android-v0.1.13-desktop-v0.1.18)) via workflow `42878001844` **success**, six published files: signed APK + checksum, Setup + checksum, Portable + checksum. Verified the three GitHub asset SHA-256 digests exactly equal `louderme/latest.json` and `louderme-desktop/latest.json`, and both feeds refer to the same public tag.
+- **Validated digests:** Android APK `d918398e49aace02c71d221ec27b8dad4b23bba1d8992e2cd8a1163821925cee`; Windows Setup `d634ff32d4f6c8ce67d766046579acf51e66b7e66b5efbc8d866a0f90bd9edb4`; Windows Portable `c4f8fbc3caf071f15d30a84b1ebbe608973126fae22d6851c1cdd46f12efa3d8`.
+- **Known limitations:** Windows app still uses optional external Equalizer APO for normal global effects; experimental SysVAD signed driver is not shipped and physical independent-app bridge #48 remains unfinished. Android real S26 Ultra acoustic A/B, Google Play production, and Windows real device validation are not certified by runner-only CI. Do not imply Authenticode signature for Windows without separate proof.
+
+---
+
 ## 2026-10-20 — GRANADA ambiciosa: macro-bloques multi-entregable (regla adoptada)
 
 **Orden del propietario:** evitar correcciones mínimas encadenadas; elegir campañas de desarrollo con aproximadamente **3–6 paquetes sustanciales relacionados y no interferentes**, cuando el backlog lo permita. Cada paquete debe entregar código/experiencia tangible, recuperar estados y bordes, añadir pruebas de regresión y documentar las verificaciones reales. El tamaño no justifica pisar ramas/claims, mezclar cuentas, omitir QA ni dar por concluida una aceptación física pendiente. Si algún paquete está bloqueado por login, hardware, CI o release, aparcarlo con issue/PR/SHA y continuar con otro trabajo seguro. El objetivo es hacer más, **no aparentarlo**. [Estándar maestro](https://github.com/michels-lab/Michel-Software-Standards/blob/main/standards/OPERACION_GRANADA_STANDARD.md).
