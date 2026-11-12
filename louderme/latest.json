@@ -2,10 +2,10 @@
   "schema": 1,
   "appId": "com.michelslab.louderme",
   "channel": "sideload",
-  "versionCode": 14,
-  "versionName": "0.1.13",
-  "apkUrl": "https://github.com/michels-lab/LouderME-Releases/releases/download/louderme-android-v0.1.13-desktop-v0.1.18/LouderMe-v0.1.13-sideload.apk",
-  "sha256": "d918398e49aace02c71d221ec27b8dad4b23bba1d8992e2cd8a1163821925cee",
-  "releaseUrl": "https://github.com/michels-lab/LouderME-Releases/releases/tag/louderme-android-v0.1.13-desktop-v0.1.18",
+  "versionCode": 15,
+  "versionName": "0.1.14",
+  "apkUrl": "https://github.com/michels-lab/LouderME-Releases/releases/download/louderme-android-v0.1.14-desktop-v0.1.19/LouderMe-v0.1.14-sideload.apk",
+  "sha256": "dd61f42d9c528a5294b12e0aeb46ca23a78f52960ae11ae87595afb00202470e",
+  "releaseUrl": "https://github.com/michels-lab/LouderME-Releases/releases/tag/louderme-android-v0.1.14-desktop-v0.1.19",
   "releaseNotes": "Michel's Lab unified stable release."
 }
