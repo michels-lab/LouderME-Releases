@@ -18,7 +18,7 @@
   },
   "finding_counts": {},
   "finding_total": 0,
-  "inventory_fingerprint": "a9a59214b5a27c62dd3b68d907e8b634c1d603d6f42657a25d7f9e0c6900e792",
+  "inventory_fingerprint": "872ee2e68bc67b89e11f3de0dedd608f134a00b91ced1da6d93e6d69e04c6e85",
   "evidence_fingerprint": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
   "files": [
     {
@@ -159,7 +159,7 @@
       "role": "config",
       "purpose": "machine-readable configuration",
       "certainty": "rule",
-      "blob": "c838a3df61e5067acd0828fa52e5e9fae64213f7"
+      "blob": "1650d95cb0da7bdd1965ef7143ca8dfc6c1f8a72"
     },
     {
       "path": "migration/START.json",
