@@ -18,7 +18,7 @@
   },
   "finding_counts": {},
   "finding_total": 0,
-  "inventory_fingerprint": "dacd5204a529c2e2aa455b56a3b403951df892da071f161b5a4feee7a40fa8ae",
+  "inventory_fingerprint": "f4e119cb1112f6063cf1dc798582cdddc4ec39680730df7d784f1b032b323cb5",
   "evidence_fingerprint": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
   "files": [
     {
@@ -103,7 +103,7 @@
       "role": "index",
       "purpose": "navigation/onboarding",
       "certainty": "rule",
-      "blob": "2fa6459353aea87624343efdd9305a76a43b62e5"
+      "blob": "26304af4a7aeb2a405aced6598b1363dce4fbe8b"
     },
     {
       "path": "RELEASE_AUDIT_LOG.md",
@@ -145,14 +145,14 @@
       "role": "config",
       "purpose": "machine-readable configuration",
       "certainty": "rule",
-      "blob": "b1590768cea6227822f503842d2856670b309c2c"
+      "blob": "f46dee73c76ccdb70013b0787374211176a3a375"
     },
     {
       "path": "louderme/latest.json",
       "role": "config",
       "purpose": "machine-readable configuration",
       "certainty": "rule",
-      "blob": "d78b4055f4b1bb0a7ba925cd34e308fb8e13d187"
+      "blob": "95ed32131a488b0b83a012ff16a08ca757f1d8d0"
     },
     {
       "path": "louderme/unified-source-request.json",
