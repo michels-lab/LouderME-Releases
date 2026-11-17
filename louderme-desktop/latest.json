@@ -3,10 +3,10 @@
   "product": "LouderMe Desktop",
   "platform": "windows-x64",
   "channel": "stable",
-  "versionName": "0.1.19",
-  "installerUrl": "https://github.com/michels-lab/LouderME-Releases/releases/download/louderme-android-v0.1.14-desktop-v0.1.19/LouderMe-Setup-v0.1.19.exe",
-  "installerSha256": "fe58241970223b82feb71e4ebc65a320cf9d67bf9b87b982027282647a6da00f",
-  "portableUrl": "https://github.com/michels-lab/LouderME-Releases/releases/download/louderme-android-v0.1.14-desktop-v0.1.19/LouderMe-Portable-v0.1.19.exe",
-  "portableSha256": "f8e750bc9ed9b661b89cf7b9ed29371ad436679f4fb2d2c679c139defbcc837e",
-  "releaseUrl": "https://github.com/michels-lab/LouderME-Releases/releases/tag/louderme-android-v0.1.14-desktop-v0.1.19"
+  "versionName": "0.1.20",
+  "installerUrl": "https://github.com/michels-lab/LouderME-Releases/releases/download/louderme-android-v0.1.15-desktop-v0.1.20/LouderMe-Setup-v0.1.20.exe",
+  "installerSha256": "cf74ec159255b89e0b645f85d7be1b74c8e85841dfd58f1668d8e57dd397f163",
+  "portableUrl": "https://github.com/michels-lab/LouderME-Releases/releases/download/louderme-android-v0.1.15-desktop-v0.1.20/LouderMe-Portable-v0.1.20.exe",
+  "portableSha256": "bace2efa281c27f250102ec3b3a8cfc243b200b9eb8f93607e4fd574f280c57f",
+  "releaseUrl": "https://github.com/michels-lab/LouderME-Releases/releases/tag/louderme-android-v0.1.15-desktop-v0.1.20"
 }
